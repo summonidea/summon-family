@@ -1,0 +1,15 @@
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\bin\Debug\SummonFamilyWPF.exe.config
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\bin\Debug\SummonFamilyWPF.exe
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\bin\Debug\SummonFamilyWPF.pdb
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\MainWindow.g.cs
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\App.g.cs
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF_MarkupCompile.cache
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF_MarkupCompile.lref
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\MainWindow.baml
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.g.resources
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.Properties.Resources.resources
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.csproj.GenerateResource.cache
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.csproj.CoreCompileInputs.cache
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.exe
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.pdb
+C:\Users\Dat\source\repos\WpfApp1\WpfApp1\obj\Debug\SummonFamilyWPF.csprojAssemblyReference.cache
