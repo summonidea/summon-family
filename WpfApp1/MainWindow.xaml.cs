@@ -25,6 +25,8 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static DataTable dt = new DataTable();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,17 +35,19 @@ namespace WpfApp1
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //excecution time start
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
+            
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             string path;
             if (openFileDialog.ShowDialog() == true)
             {
+                var watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
+
                 //txtEditor.Text = File.ReadAllText(openFileDialog.FileName);
                 path = openFileDialog.FileName;
-
-                //string path = @"C:\Users\Dat\Downloads\TFP-64-24M-FGLID.rfa";
+                               
+                //string path = @"C:\Users\\Downloads\TFP-64-24M-FGLID.rfa";
                 //Extract AtomXml from Rfa
                 string atomXml = ExtractAtomXmlFromRfa(path);
                 //Console.WriteLine(atomXml);
@@ -67,9 +71,9 @@ namespace WpfApp1
                 //XmlNodeReader xread =
                 dataSet.ReadXml(xtr);
                 DataView dataView = new DataView(dataSet.Tables[2]);
-                dataGrid1.ItemsSource = dataView;
-
+                //dataGrid1.ItemsSource = dataView;
                 
+
 
                 XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
                
@@ -85,6 +89,16 @@ namespace WpfApp1
                 XmlNode familyUpdatedDateNode = xmlDoc.SelectSingleNode("atom:entry/atom:link/A:design-file/A:updated", namespaceManager);
                 familyUpdatedDate.Text = familyUpdatedDateNode.InnerText;
 
+                XmlNode familyFeaturesNode = xmlDoc.SelectSingleNode("atom:entry/A:features/A:feature", namespaceManager);
+
+                
+                DataColumn paramName = new DataColumn("parameter");
+                DataColumn paramValue = new DataColumn("value");
+                dt.Columns.Add(paramName);
+                dt.Columns.Add(paramValue);
+
+                NodeToTable(familyFeaturesNode);
+                dataGrid1.ItemsSource = dt.DefaultView;
                 //excecution time stop
                 watch.Stop();
                 Console.WriteLine($"Execution Time: {watch.ElapsedMilliseconds} ms");
@@ -175,6 +189,53 @@ namespace WpfApp1
             {
                 Console.WriteLine("ELSE");
             }
+        }
+
+        static DataTable NodeToTable(XmlNode node)
+        {         
+
+
+            if (node.HasChildNodes)
+            {
+                for (int i = 0; i < node.ChildNodes.Count; i++)
+                {
+                    XmlNode inode = node.ChildNodes[i];
+                    if (node.ChildNodes[i].FirstChild != null)
+                    {
+                        if (node.ChildNodes[i].NodeType == XmlNodeType.Element && node.ChildNodes[i].FirstChild.NodeType == XmlNodeType.Element)
+                        {
+                            //if (node.ChildNodes[i].Name == "A:group")
+                            //{
+                            //    Console.WriteLine(node.ChildNodes[i].FirstChild.InnerText);
+                            //}
+                            int parentCount = NodeParentCount(node.ChildNodes[i], 0);                            
+                            Console.WriteLine(new String('=', parentCount) + " " + node.ChildNodes[i].LocalName);
+                            //add rows
+                            //DataRow row = dt.NewRow();
+                            //row[0] = node.ChildNodes[i].LocalName;
+                            //dt.Rows.Add(row);
+                            //recursivity
+                            NodeToTable(node.ChildNodes[i]);                                                 
+
+                        }
+                        if (node.ChildNodes[i].NodeType == XmlNodeType.Element && node.ChildNodes[i].FirstChild.NodeType == XmlNodeType.Text)
+                        {
+                            int parentCount = NodeParentCount(node.ChildNodes[i], 0);
+                            Console.WriteLine(new String('=', parentCount) + " " + node.ChildNodes[i].LocalName + " : " + node.ChildNodes[i].InnerText);
+                            //
+                            DataRow row = dt.NewRow();
+                            row[0] = node.ChildNodes[i].LocalName;
+                            row[1] = node.ChildNodes[i].InnerText;
+                            dt.Rows.Add(row);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("ELSE");
+            }
+            return dt;
         }
 
         /// <summary>
