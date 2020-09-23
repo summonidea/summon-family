@@ -33,14 +33,13 @@ namespace WpfApp1
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //excecution time start
-            
+        {                      
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             string path;
             if (openFileDialog.ShowDialog() == true)
             {
+                //excecution time start
                 var watch = new System.Diagnostics.Stopwatch();
                 watch.Start();
 
@@ -66,20 +65,22 @@ namespace WpfApp1
                 //txtbox1.Text = path.ToString();
                 filePath.Text = path.ToString();
 
-                DataSet dataSet = new DataSet();
-                XmlTextReader xtr = new XmlTextReader(root.LastChild.LastChild.OuterXml, XmlNodeType.Element, null);
-                //XmlNodeReader xread =
-                dataSet.ReadXml(xtr);
-                DataView dataView = new DataView(dataSet.Tables[2]);
-                //dataGrid1.ItemsSource = dataView;
+                //DataSet dataSet = new DataSet();
+                //XmlTextReader xtr = new XmlTextReader(root.LastChild.LastChild.OuterXml, XmlNodeType.Element, null);
+                ////XmlNodeReader xread =
+                //dataSet.ReadXml(xtr);
+                //DataView dataView = new DataView(dataSet.Tables[2]);
+                ////dataGrid1.ItemsSource = dataView;
                 
 
-
+                //Init namespace manager
                 XmlNamespaceManager namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
-               
+
+                //Add namespaces
                 namespaceManager.AddNamespace("atom", "http://www.w3.org/2005/Atom");                
                 namespaceManager.AddNamespace("A", "urn:schemas-autodesk-com:partatom");
-          
+
+                //Selecting Main information nodes
                 XmlNode familyNameNode = xmlDoc.SelectSingleNode("atom:entry/atom:title", namespaceManager); 
                 familyName.Text = familyNameNode.InnerText;
                 XmlNode familyCategoryNode = xmlDoc.SelectSingleNode("atom:entry/atom:category/atom:term", namespaceManager);
@@ -191,9 +192,13 @@ namespace WpfApp1
             }
         }
 
+        /// <summary>
+        /// Returns a DataTable from an XMLNode
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         static DataTable NodeToTable(XmlNode node)
         {         
-
 
             if (node.HasChildNodes)
             {
